@@ -1,8 +1,27 @@
-//Segment class
+//Class segment
 function segment(color, x, y) {
 	this.color = color;
 	this.x = x;
-	this.y = 25;
+	this.y = y;
+	
+	this.move = function(dir, length) {
+		switch (dir) {
+			case "right":
+				this.x += length;
+				break;
+			case "left":
+				this.x -= length;
+				break;
+			case "up":
+				this.y -= length;
+				break;
+			case "down":
+				this.y += length;
+				break;
+			default:
+				console.log("Bad direction");
+		}
+	};
 	
 	this.draw = function() {
 		//draw a circle
@@ -22,14 +41,21 @@ function Snake(color) {
 		segments.push(new segment(color, x, y));
 	};
 	
+	this.move = function(dir) {
+		for (var i = 0; i < segments.length; i++) {
+			segments[i].move(dir, 10);
+		}
+	};
+	
 	this.draw = function() {
 		for (var i = 0; i < segments.length; i++) {
 			segments[i].draw();
 		}
 	}
 };
-var ctx;
 
+//Global objects
+var ctx;
 var snake = new Snake();
 
 function init() {
@@ -45,9 +71,10 @@ function move() {
 
 function gameLoop() {
 	// Move snake
+	snake.move("right");
 	
 	//Check if food is eaten
-	snake.addSegment("#CCFFFF", 50, 50);
+	snake.addSegment("#CCFFFF", 100, 100);
 	
 	//Draw the snake
 	snake.draw();
