@@ -44,7 +44,7 @@ function Snake(color) {
 	};
 
 	this.move = function() {
-		for (var i = 0; i < this.segments.length; i++) {
+		for (var i = this.segments.length - 1; i >= 0; i--) {
 			if (i == 0) {
 				var x = 0;
 				var y = 0;
@@ -93,20 +93,18 @@ function init() {
 	return setInterval(gameLoop, 500);
 };
 
-function move() {
-	var seg1 = new segment("red");
-	seg1.draw();
-};
-
 function gameLoop() {
-	// Move snake
-  snake.move();
+	//Move snake
+    snake.move();
 
 	//Check if food is eaten
+
+	//Add segment if applicable
+	snake.addSegment("#AA00BB");
 	snake.addSegment("#CCFFFF");
 
 	//Draw the snake
-  ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
+  	ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
 	snake.draw();
 };
 
