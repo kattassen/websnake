@@ -38,7 +38,22 @@ function Snake(color) {
   this.direction = "right";
 	this.segments = [new segment("#000000", 25, 25)];
 
-	this.addSegment = function(color, x, y) {
+	this.addSegment = function(color) {
+    //Find last segments porsition
+    var x = this.segments[this.segments.length -1].x;
+    var y = this.segments[this.segments.length -1].y;
+
+    switch (this.direction) {
+      case "left":
+        x += 10;
+      case "right":
+        x -= 10;
+      case "up":
+        y += 10;
+      case "down":
+        y -= 10;
+    }
+
 	  this.segments.push(new segment(color, x, y));
 	};
 
@@ -55,7 +70,7 @@ function Snake(color) {
 	}
 
   this.setDirection = function(direction) {
-		  this.direction = direction;
+    this.direction = direction;
 	}
 };
 
@@ -80,9 +95,10 @@ function gameLoop() {
   snake.move();
 
 	//Check if food is eaten
-	//snake.addSegment("#CCFFFF", 100, 100);
+	snake.addSegment("#CCFFFF");
 
 	//Draw the snake
+  ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
 	snake.draw();
 };
 
@@ -100,7 +116,7 @@ function bindEvents() {
       console.log(direction);
       if (direction) {
         snake.setDirection(direction);
-        //event.preventDefault();
+        event.preventDefault();
       }
       else if (key === 32) {
         restart();
@@ -110,10 +126,5 @@ function bindEvents() {
 
 $(document).ready(function() {
 	init();
-	//var snake = new Object();
-
-	//var seg1 = new segment("red");
-
-	//seg1.draw();
 });
 
