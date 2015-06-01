@@ -80,12 +80,20 @@ function Snake(color) {
     this.direction = direction;
 	}
 
-	this.checkHeadPos = function(x,y) {
+	this.checkCollision = function(x,y) {
 		if (this.segments[0].x == x && this.segments[0].y == y)
 			return true;
 		else
 			return false;
+	};
 
+	this.checkSelfCollision = function() {
+		for (var i = this.segments.length - 1; i > 0; i--) {
+			if (this.segments[0].x == this.segments[i].x && this.segments[0].y == this.segments[i].y)
+				return true;
+			else
+				return false;
+		}
 	};
 };
 
@@ -113,10 +121,14 @@ function gameLoop() {
 	//Move snake
     snake.move();
 
+    //Check if collision with self
+    if (snake.checkSelfCollision())
+    	alert("GAME OVER!");
+
 	//Check if food is eaten and
 	//add segment to snake and new food
 	//if applicable
-	if (snake.checkHeadPos(food.x, food.y)) {
+	if (snake.checkCollision(food.x, food.y)) {
 		snake.addSegment(food.color);
 		food = new Segment("#336622", 200, 200);
 	}
