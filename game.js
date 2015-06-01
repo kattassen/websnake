@@ -1,5 +1,5 @@
 //Class segment
-function segment(color, x, y) {
+function Segment(color, x, y) {
 	this.color = color;
 	this.x = x;
 	this.y = y;
@@ -22,7 +22,7 @@ function segment(color, x, y) {
 //Class snake
 function Snake(color) {
     this.direction = "right";
-	this.segments = [new segment("#000000", 25, 25)];
+	this.segments = [new Segment("#000000", 20, 20)];
 
 	this.addSegment = function(color) {
     	//Find last segments position
@@ -38,7 +38,7 @@ function Snake(color) {
       	case "down":
         	y -= 10;
     	}
-	  	this.segments.push(new segment(color, x, y));
+	  	this.segments.push(new Segment(color, x, y));
 	};
 
 	this.move = function() {
@@ -79,20 +79,33 @@ function Snake(color) {
   this.setDirection = function(direction) {
     this.direction = direction;
 	}
+
+	this.checkHeadPos = function(x,y) {
+		if (this.segments[0].x == x && this.segments[0].y == y)
+			return true;
+		else
+			return false;
+
+	};
 };
 
 //Global objects
 var ctx;
 var snake = new Snake();
+var food = new Segment("#111199", 100, 100);
 
 function init() {
 	//get a reference to the canvas
 	ctx = $('#canvas')[0].getContext("2d");
   	bindEvents();
+
+  	//Add some segments to snake
   	snake.addSegment("#AA00BB");
 	snake.addSegment("#AA00BB");
 	snake.addSegment("#AAFFBB");
 	snake.addSegment("#1100BB");
+
+
 	return setInterval(gameLoop, 500);
 };
 
@@ -100,14 +113,18 @@ function gameLoop() {
 	//Move snake
     snake.move();
 
-	//Check if food is eaten
+	//Check if food is eaten and
+	//add segment to snake and new food
+	//if applicable
+	if (snake.checkHeadPos(food.x, food.y)) {
+		snake.addSegment(food.color);
+		food = new Segment("#336622", 200, 200);
+	}
 
-	//Add segment if applicable
-	
-
-	//Draw the snake
+	//Clear canvas and draw the snake
   	ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
 	snake.draw();
+	food.draw();
 };
 
 function bindEvents() {
