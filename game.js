@@ -89,6 +89,10 @@ function init() {
 	//get a reference to the canvas
 	ctx = $('#canvas')[0].getContext("2d");
   	bindEvents();
+  	snake.addSegment("#AA00BB");
+	snake.addSegment("#AA00BB");
+	snake.addSegment("#AAFFBB");
+	snake.addSegment("#1100BB");
 	return setInterval(gameLoop, 500);
 };
 
@@ -99,8 +103,7 @@ function gameLoop() {
 	//Check if food is eaten
 
 	//Add segment if applicable
-	snake.addSegment("#AA00BB");
-	snake.addSegment("#CCFFFF");
+	
 
 	//Draw the snake
   	ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
