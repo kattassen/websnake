@@ -21,26 +21,24 @@ function segment(color, x, y) {
 
 //Class snake
 function Snake(color) {
-  this.direction = "right";
+    this.direction = "right";
 	this.segments = [new segment("#000000", 25, 25)];
 
 	this.addSegment = function(color) {
-    //Find last segments porsition
-    var x = this.segments[this.segments.length -1].x;
-    var y = this.segments[this.segments.length -1].y;
-
-    switch (this.direction) {
-      case "left":
-        x += 10;
-      case "right":
-        x -= 10;
-      case "up":
-        y += 10;
-      case "down":
-        y -= 10;
-    }
-
-	  this.segments.push(new segment(color, x, y));
+    	//Find last segments position
+    	var x = this.segments[this.segments.length -1].x;
+    	var y = this.segments[this.segments.length -1].y;
+    	switch (this.direction) {
+      	case "left":
+        	x += 10;
+      	case "right":
+        	x -= 10;
+      	case "up":
+        	y += 10;
+      	case "down":
+        	y -= 10;
+    	}
+	  	this.segments.push(new segment(color, x, y));
 	};
 
 	this.move = function() {
@@ -74,6 +72,7 @@ function Snake(color) {
 	this.draw = function() {
 		for (var i = 0; i < this.segments.length; i++) {
 			this.segments[i].draw();
+			console.log(i + "  " + this.segments[i].x + "  " + this.segments[i].y);
 		}
 	}
 
@@ -89,7 +88,7 @@ var snake = new Snake();
 function init() {
 	//get a reference to the canvas
 	ctx = $('#canvas')[0].getContext("2d");
-  bindEvents();
+  	bindEvents();
 	return setInterval(gameLoop, 500);
 };
 
@@ -119,7 +118,6 @@ function bindEvents() {
     $(document).keydown(function (event) {
       var key = event.which;
       var direction = keysToDirections[key];
-      console.log(direction);
       if (direction) {
         snake.setDirection(direction);
         event.preventDefault();
