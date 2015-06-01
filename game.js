@@ -4,23 +4,9 @@ function segment(color, x, y) {
 	this.x = x;
 	this.y = y;
 
-	this.move = function(dir, length) {
-		switch (dir) {
-			case "right":
-				this.x += length;
-				break;
-			case "left":
-				this.x -= length;
-				break;
-			case "up":
-				this.y -= length;
-				break;
-			case "down":
-				this.y += length;
-				break;
-			default:
-				console.log("Bad direction");
-		}
+	this.move = function(x, y) {
+		this.x = x;
+		this.y = y;
 	};
 
 	this.draw = function() {
@@ -59,7 +45,29 @@ function Snake(color) {
 
 	this.move = function() {
 		for (var i = 0; i < this.segments.length; i++) {
-			this.segments[i].move(this.direction, 10);
+			if (i == 0) {
+				var x = 0;
+				var y = 0;
+				switch (this.direction) {
+				case "right":
+					x = 10;
+					break;
+				case "left":
+					x = -10;
+					break;
+				case "up":
+					y = -10;
+					break;
+				case "down":
+					y = 10;
+					break;
+				default:
+					console.log("Bad direction");
+				}
+				this.segments[i].move(this.segments[i].x + x, this.segments[i].y + y);
+			} else {
+				this.segments[i].move(this.segments[i-1].x, this.segments[i-1].y);
+			}
 		}
 	};
 
