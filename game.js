@@ -77,7 +77,11 @@ function Snake(color) {
 	}
 
   this.setDirection = function(direction) {
-    this.direction = direction;
+    if ((direction == "left" && this.direction != "right") ||
+        (direction == "right" && this.direction != "left") ||
+        (direction == "up" && this.direction != "down") ||
+        (direction == "down" && this.direction != "up"))
+      this.direction = direction;
 	}
 
 	this.checkCollision = function(x,y) {
