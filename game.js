@@ -26,8 +26,8 @@ function Snake(color) {
 
 	this.addSegment = function(color) {
     	//Find last segments position
-    	var x = this.segments[this.segments.length -1].x;
-    	var y = this.segments[this.segments.length -1].y;
+    	var x = 0;
+    	var y = 0;
     	switch (this.direction) {
       	case "left":
         	x += 10;
@@ -38,7 +38,7 @@ function Snake(color) {
       	case "down":
         	y -= 10;
     	}
-	  	this.segments.push(new Segment(color, x, y));
+	  	this.segments.push(new Segment(color, this.segments[this.segments.length-1].x + x, this.segments[this.segments.length-1].y + y));
 	};
 
 	this.move = function() {
