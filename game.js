@@ -105,12 +105,21 @@ function Snake(color) {
 
 //Global objects
 var ctx;
-var snake = new Snake();
-var food = new Segment("#111199", 100, 100);
+var snake;
+var food;
+var interval;
 
 function init() {
 	//get a reference to the canvas
 	ctx = $('#canvas')[0].getContext("2d");
+	bindEvents();
+};
+
+function start() {
+	clearInterval(interval);
+
+	snake = new Snake();
+	food = new Segment("#111199", 100, 100);
 
   	//Add some segments to snake
   	snake.addSegment("#AA00BB");
@@ -118,7 +127,7 @@ function init() {
 	snake.addSegment("#AAFFBB");
 	snake.addSegment("#1100BB");
 
-	return setInterval(gameLoop, 200);
+	interval = setInterval(gameLoop, 200);
 };
 
 function gameLoop() {
@@ -176,11 +185,11 @@ function bindEvents() {
     });
 
 	$("#newgame").click(function () {
-		init();
+		start();
 	});
 };
 
 $(document).ready(function() {
-	bindEvents();
+	init();
 });
 
