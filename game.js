@@ -111,14 +111,12 @@ var food = new Segment("#111199", 100, 100);
 function init() {
 	//get a reference to the canvas
 	ctx = $('#canvas')[0].getContext("2d");
-  	bindEvents();
 
   	//Add some segments to snake
   	snake.addSegment("#AA00BB");
 	snake.addSegment("#AA00BB");
 	snake.addSegment("#AAFFBB");
 	snake.addSegment("#1100BB");
-
 
 	return setInterval(gameLoop, 200);
 };
@@ -178,11 +176,11 @@ function bindEvents() {
     });
 
 	$("#newgame").click(function () {
-		
+		init();
 	});
 };
 
 $(document).ready(function() {
-	init();
+	bindEvents();
 });
 
