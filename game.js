@@ -172,6 +172,7 @@ function bindEvents() {
         restart();
       }
     });
+
 };
 
 $(document).ready(function() {
