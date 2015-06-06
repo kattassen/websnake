@@ -85,7 +85,9 @@ function Snake(color) {
 	}
 
 	this.checkCollision = function(x,y) {
-		if (this.segments[0].x == x && this.segments[0].y == y)
+		if ((this.segments[0].x == x && this.segments[0].y == y) ||
+			(this.segments[0].x == x && y == null) ||
+			(this.segments[0].y == y && x == null))
 			return true;
 		else
 			return false;
@@ -125,9 +127,22 @@ function gameLoop() {
 	//Move snake
     snake.move();
 
+	//Clear canvas and draw the snake
+	ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
+	snake.draw();
+	food.draw();
+
     //Check if collision with self
     if (snake.checkSelfCollision())
     	alert("GAME OVER!");
+
+	//Check if collision with wall
+	if (snake.checkCollision(0, null) ||
+		snake.checkCollision(null, 0) ||
+		snake.checkCollision(canvas.width, null) ||
+		snake.checkCollision(null, canvas.height)) {
+		alert("GAME OVER!");
+	}
 
 	//Check if food is eaten and
 	//add segment to snake and new food
@@ -136,11 +151,6 @@ function gameLoop() {
 		snake.addSegment(food.color);
 		food = new Segment("#336622", 200, 200);
 	}
-
-	//Clear canvas and draw the snake
-  	ctx.clearRect ( 0 , 0 , canvas.width, canvas.height );
-	snake.draw();
-	food.draw();
 };
 
 function bindEvents() {
