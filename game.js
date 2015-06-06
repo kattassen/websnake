@@ -120,7 +120,7 @@ function init() {
 	snake.addSegment("#1100BB");
 
 
-	return setInterval(gameLoop, 500);
+	return setInterval(gameLoop, 200);
 };
 
 function gameLoop() {
@@ -149,7 +149,11 @@ function gameLoop() {
 	//if applicable
 	if (snake.checkCollision(food.x, food.y)) {
 		snake.addSegment(food.color);
-		food = new Segment("#336622", 200, 200);
+
+		var r = Math.random();
+		food = new Segment("#" + (Math.floor(r*0xffffff)).toString(16),
+						  (Math.floor(r*canvas.width/10)*10),
+						  (Math.floor(r*canvas.height/10)*10));
 	}
 };
 
@@ -173,6 +177,9 @@ function bindEvents() {
       }
     });
 
+	$("#newgame").click(function () {
+		
+	});
 };
 
 $(document).ready(function() {
